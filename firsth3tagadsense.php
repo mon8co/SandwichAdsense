@@ -2,7 +2,7 @@
 /*
 Plugin Name: Sandwich Adsense
 Plugin URI: https://github.com/j801/firsth3tagadsense
-Description: This is WordPress Plugin To insert Google AdSense code in Your blog entry. 
+Description: This is a WordPress plugin to insert Google AdSense code in your blog entry. 
 Author: Minoru Wada
 Version: 2.0.1
 Author URI: http://mon8co.com
