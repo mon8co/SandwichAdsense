@@ -4,7 +4,7 @@ Plugin Name: Sandwich Adsense
 Plugin URI: https://github.com/j801/firsth3tagadsense
 Description: This is a WordPress plugin to insert Google AdSense code in your blog entry. 
 Author: Minoru Wada
-Version: 2.0.1
+Version: 3.0.0
 Author URI: http://mon8co.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,10 +21,12 @@ add_action('admin_menu',array($Fhas,'my_admin_menu'));
 
 class FirstH3TagAdsense {
 
+	//コンストラクタ
 	function __construct() {
 		add_action( 'plugins_loaded', array( &$this, 'initialize' ) );
 	}
 
+	//初期化処理
 	function initialize() {
 
 		add_action('admin_init', array($this,'my_admin_init'));
@@ -52,7 +54,7 @@ class FirstH3TagAdsense {
 		    $options_locate = get_option("taglocate");
 		?>
 		    <div class="wrap">
-		    <h1>Sandwich Adsense(Version2.0)</h1>
+		    <h1>Sandwich Adsense(Version３.0)</h1>
 		    <h2>Adsense Code Setting</h2>
 		    <form id="my-submenu-form" method="post" action="">
 		    	<?php wp_nonce_field('my-nonce-key','FirstH3TagAdsense'); ?>
@@ -75,9 +77,9 @@ class FirstH3TagAdsense {
 					<option value="under" <?php selected( $options_tag, "under" ); ?>>under</option>
 				</select></li>
 				<li>Setting Code(PC)</li>
-				<textarea name="adsense_code" id="adsense_code" cols="100" rows="10"><?php echo esc_textarea(stripslashes(get_option('adsense_code'))); ?></textarea><p/></ul>
+					<textarea name="adsense_code" id="adsense_code" cols="100" rows="10"><?php echo esc_textarea(stripslashes(get_option('adsense_code'))); ?></textarea><p/>
 				<li>Setting Code(mobile)</li>
-				<textarea name="adsense_code_mobile" id="adsense_code" cols="100" rows="10"><?php echo esc_textarea(stripslashes(get_option('adsense_code_mobile'))); ?></textarea><p/></ul>
+					<textarea name="adsense_code_mobile" id="adsense_code" cols="100" rows="10"><?php echo esc_textarea(stripslashes(get_option('adsense_code_mobile'))); ?></textarea><p/></ul>
 				<p/>
 		  		<input type="submit" value="Save"><div>This Plugin made by Minoru Wada@mon8co(<a href="http://mon8co.com">http://mon8co.com</a>)</div>
 		  	</form> 
@@ -89,6 +91,10 @@ class FirstH3TagAdsense {
 
 		if (isset($_POST['adsense_code']) && $_POST['adsense_code']) {
 					update_option('adsense_code',stripslashes($_POST['adsense_code']));
+		}
+
+		if (isset($_POST['adsense_code_mobile']) && $_POST['adsense_code_mobile']) {
+					update_option('adsense_code_mobile',stripslashes($_POST['adsense_code_mobile']));
 		}
 
 		if (isset($_POST['tagtype']) && $_POST['tagtype']) {
@@ -113,13 +119,28 @@ class FirstH3TagAdsense {
 	function add_ads_before_1st_h3($the_content) {
 	  if ( is_single() ) {
 	    
-	    $ad_template = get_option('adsense_code');
+		//モバイルの場合はモバイル用の広告を出力
+		if ( wp_is_mobile() ) {
+			$ad_template = get_option('adsense_code_mobile');
+		} else {
+	    	$ad_template = get_option('adsense_code');
+		}
 	    
-	    preg_match_all( H3_REG, $the_content, $h3results);
+		//指定されたタグにあわせてリプレイスする広告を選ぶ
+	    if (get_option('tagtype') == "h2tag" ) {
+	    	preg_match_all( H2_REG, $the_content, $h3results);
+		} else if (get_option('tagtype') == "h3tag" ) {
+			preg_match_all( H3_REG, $the_content, $h3results);
+		} else if (get_option('tagtype') == "h4tag" ) {
+			preg_match_all( H4_REG, $the_content, $h3results);
+	  	}
+
 	    $h3result = $h3results[0];
 
 	    if ( $h3result ) {
+			//指定タグの上に出力する場合
 	    	if (get_option('taglocate') == "above") {
+				//タグの出力位置。何番目のタグかで判断
 	    		if (get_option('whichtag') == "1") {
 	    	  			$the_content = str_replace($h3result[0], $ad_template.$h3result[0], $the_content);
 	    			} else if (get_option('whichtag') == "2") {
@@ -127,7 +148,9 @@ class FirstH3TagAdsense {
 	    			} else if (get_option('whichtag') == "3") {
 	    				$the_content = str_replace($h3result[2], $ad_template.$h3result[2], $the_content);
 	    		}
+			//指定タグの下に出力する場合
 	    	} else {
+				//タグの出力位置。何番目のタグかで判断
 	    		if (get_option('whichtag') == "1") {
 	    			$the_content = str_replace($h3result[0], $h3result[0].$ad_template, $the_content);
 	    		} else if (get_option('whichtag') == "2") {
