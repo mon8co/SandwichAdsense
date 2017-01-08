@@ -135,9 +135,9 @@ class FirstH3TagAdsense {
 			preg_match_all( H4_REG, $the_content, $h3results);
 	  	}
 
-	    $h3result = $h3results[0];
+	    if ( !empty( $h3results ) ) {
+				$h3result = $h3results[0];
 
-	    if ( $h3result ) {
 			//指定タグの上に出力する場合
 	    	if (get_option('taglocate') == "above") {
 				//タグの出力位置。何番目のタグかで判断
