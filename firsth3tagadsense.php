@@ -4,7 +4,7 @@ Plugin Name: Sandwich Adsense
 Plugin URI: https://github.com/mon8co/SandwichAdsense
 Description: This is a WordPress plugin to insert Google AdSense code in your blog entry.
 Author: Minoru Wada
-Version: 3.0.0
+Version: 3.3.1
 Text domain: firsth3tagadsense
 Author URI: http://mon8co.com
 License: GPLv2 or later
