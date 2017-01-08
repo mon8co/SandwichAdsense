@@ -1,19 +1,21 @@
 <?php
 /*
 Plugin Name: Sandwich Adsense
-Plugin URI: https://github.com/j801/firsth3tagadsense
-Description: This is a WordPress plugin to insert Google AdSense code in your blog entry. 
+Plugin URI: https://github.com/mon8co/SandwichAdsense
+Description: This is a WordPress plugin to insert Google AdSense code in your blog entry.
 Author: Minoru Wada
 Version: 3.0.0
+Text domain: firsth3tagadsense
 Author URI: http://mon8co.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
-define('SPN', "<p>SPONSORED LINK<p/>");
 
 define('H2_REG', "/<h2>[^<]*<\/h2>/i"); //h2Tag
 define('H3_REG', "/<h3>[^<]*<\/h3>/i"); //h3Tag
 define('H4_REG', "/<h4>[^<]*<\/h4>/i"); //h4Tag
+
+define('VERSION_NO', '3.0');
 
 $Fhas = new FirstH3TagAdsense();
 
@@ -40,49 +42,49 @@ class FirstH3TagAdsense {
 
 	function my_admin_menu() {
 	add_options_page (
-			'Sandwich Adsense',
-			'Sandwich Adsense',
+			__('Sandwich Adsense', 'firsth3tagadsense'),
+			__('Sandwich Adsense', 'firsth3tagadsense'),
 			'manage_options',
 			'Sandwich Adsense',
 			array($this,'my_submenu')
 			);
 	}
 
-	function my_submenu() { 
+	function my_submenu() {
 		    $options_tag = get_option("tagtype");
 		    $options_which = get_option("whichtag");
 		    $options_locate = get_option("taglocate");
 		?>
 		    <div class="wrap">
-		    <h1>Sandwich Adsense(Version３.0)</h1>
-		    <h2>Adsense Code Setting</h2>
+		    <h1><?php esc_html_e('Sandwich Adsense', 'firsth3tagadsense'); ?> <?php printf(__('(Version %s)', 'firsth3tagadsense'), VERSION_NO); ?></h1>
+		    <h2><?php esc_html_e('Adsense Code Setting', 'firsth3tagadsense'); ?></h2>
 		    <form id="my-submenu-form" method="post" action="">
 		    	<?php wp_nonce_field('my-nonce-key','FirstH3TagAdsense'); ?>
 		    	<ul>
-		    	<li>Target Tag
+		    	<li><?php esc_html_e('Target tag', 'firsth3tagadsense'); ?>
 		    	<select name="tagtype">
 		    		<option value="h2tag" <?php selected( $options_tag, "h2tag" ); ?>>H2</option>
 					<option value="h3tag" <?php selected( $options_tag, "h3tag" ); ?>>H3</option>
 					<option value="h4tag" <?php selected( $options_tag, "h4tag" ); ?>>H4</option>
 				</select></li>
-				<li>Which Tag
+				<li><?php esc_html_e('Target tag order', 'firsth3tagadsense'); ?>
 				<select name="whichtag">
-		    		<option value="1" <?php selected( $options_which, "1" ); ?>>1st</option>
-					<option value="2" <?php selected( $options_which, "2" ); ?>>2nd</option>
-					<option value="3" <?php selected( $options_which, "3" ); ?>>3rd</option>
+		    		<option value="1" <?php selected( $options_which, "1" ); ?>><?php esc_html_e('1st', 'firsth3tagadsense'); ?></option>
+					<option value="2" <?php selected( $options_which, "2" ); ?>><?php esc_html_e('2nd', 'firsth3tagadsense'); ?></option>
+					<option value="3" <?php selected( $options_which, "3" ); ?>><?php esc_html_e('3rd', 'firsth3tagadsense'); ?></option>
 				</select></li>
-				<li>Target Place
+				<li><?php esc_html_e('Ad place from Tag', 'firsth3tagadsense'); ?>
 				<select name="taglocate">
-		    		<option value="above" <?php selected( $options_tag, "above" ); ?>>above</option>
-					<option value="under" <?php selected( $options_tag, "under" ); ?>>under</option>
+		    		<option value="above" <?php selected( $options_tag, "above" ); ?>><?php esc_html_e('above', 'firsth3tagadsense'); ?></option>
+					<option value="under" <?php selected( $options_tag, "under" ); ?>><?php esc_html_e('under', 'firsth3tagadsense'); ?></option>
 				</select></li>
-				<li>Setting Code(PC)</li>
+				<li><?php printf(__('Ad Code (%s)', 'firsth3tagadsense'), __('PC', 'firsth3tagadsense')); ?></li>
 					<textarea name="adsense_code" id="adsense_code" cols="100" rows="10"><?php echo esc_textarea(stripslashes(get_option('adsense_code'))); ?></textarea><p/>
-				<li>Setting Code(mobile)</li>
+				<li><?php printf(__('Ad Code (%s)', 'firsth3tagadsense'), __('mobile', 'firsth3tagadsense')); ?></li>
 					<textarea name="adsense_code_mobile" id="adsense_code" cols="100" rows="10"><?php echo esc_textarea(stripslashes(get_option('adsense_code_mobile'))); ?></textarea><p/></ul>
 				<p/>
-		  		<input type="submit" value="Save"><div>This Plugin made by Minoru Wada@mon8co(<a href="http://mon8co.com">http://mon8co.com</a>)</div>
-		  	</form> 
+		  		<input type="submit" value="<?php esc_html_e('Save', 'firsth3tagadsense'); ?>"><div><?php printf(__('This Plugin made by Minoru Wada @mon8co(%s)', 'firsth3tagadsense'), '<a href="http://mon8co.com">http://mon8co.com</a>'); ?></div>
+		  	</form>
 		  	</div>
 		 <?php
 	}
