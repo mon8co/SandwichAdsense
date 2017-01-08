@@ -10,7 +10,6 @@ Author URI: http://mon8co.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
-define('SPN', "<p>SPONSORED LINK<p/>");
 
 define('H2_REG', "/<h2>[^<]*<\/h2>/i"); //h2Tag
 define('H3_REG', "/<h3>[^<]*<\/h3>/i"); //h3Tag
