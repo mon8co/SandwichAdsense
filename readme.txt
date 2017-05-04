@@ -1,6 +1,6 @@
 === SandAdsense ===
 Tags: Sandwich Adsense
-Requires at least: 2.0.0
+Requires at least: 3.3.2
 License: GPLv2
 
 == Description ==
