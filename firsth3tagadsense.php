@@ -11,9 +11,9 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-define('H2_REG', "/<h2>[^<]*<\/h2>/i"); //h2Tag
-define('H3_REG', "/<h3>[^<]*<\/h3>/i"); //h3Tag
-define('H4_REG', "/<h4>[^<]*<\/h4>/i"); //h4Tag
+define('H2_REG', "/<h2.*?>[^<]*<\/h2>/i"); //h2Tag
+define('H3_REG', "/<h3.*?>[^<]*<\/h3>/i"); //h3Tag
+define('H4_REG', "/<h4.*?>[^<]*<\/h4>/i"); //h4Tag
 
 define('VERSION_NO', '3.0');
 
